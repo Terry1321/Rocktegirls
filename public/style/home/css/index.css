@@ -1,0 +1,241 @@
+*{margin: 0;padding: 0;}
+/*轮播图*/
+.col-md-12{
+	padding: 0;
+}
+.item img{
+	width: 100%;
+}
+/*新闻资讯*/
+.news{
+	padding-top: 35px;
+	background: #fcedef;
+}
+.list-group-item{
+	border: 1px  dashed #ddd;
+}
+.list-group-item img{
+	width: 109px;
+	height: 72px;
+}
+.panel{
+	border-radius: 25px 0;
+}
+.panel-heading{
+	color: #fff !important;
+	font-size: 20px;
+	border-radius: 25px 0;
+	background: #f38eab !important;
+}
+.panel-heading a{
+	color: #fff;
+}
+.panel-heading a:hover{
+	color: skyblue;
+	text-decoration: none;
+}
+/*成员介绍*/
+.title{
+	position: absolute;
+	width: 95%;
+	font-style: normal;
+	font-size: 25px;
+	color: #fff;
+	line-height: 70px;
+	border-radius: 30px 0;
+	margin: 25px 0 0 25px;
+	height: 70px;
+	background: #f38eab;
+	z-index: 1;
+}
+.member{
+	height: 600px;
+	background: #fff;
+	position: relative;
+}
+.body{
+	padding:60px 20px 0 20px;
+	position: absolute;
+	top:50px;
+	left: 6px;
+	right: 0;
+	width: 100%;
+	background: #fff;
+	height: 500px;
+}
+/*图片轮播*/
+	.swiper-wrapper{
+		margin-top: 3%;
+	}
+    .swiper-container {
+      width: 100%;
+      height: 300px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .swiper-slide {
+      background-size: cover;
+      background-position: center;
+    }
+    .gallery-top {
+      height: 55%;
+      width: 100%;
+    }
+    .gallery-thumbs {
+      height:45%;
+      box-sizing: border-box;
+      padding: 10px 0;
+    }
+    .gallery-thumbs .swiper-slide {
+      width: 25%;
+      height: 100%;
+      opacity: 0.4;
+    }
+    .gallery-thumbs .swiper-slide-thumb-active {
+      opacity: 1;
+    }
+   /*成员名字*/
+   .name{
+   	padding:2.8%;
+   	font-size: 16px;
+   	color: #fff;
+   	background: #000;
+   	height:20%;
+   	opacity:0.5;
+   }
+/*音乐作品*/
+.music-container{
+	  width: 100%;
+      height: 480px;
+      margin-left: auto;
+      margin-right: auto;
+}
+.music-body{
+	padding:60px 20px 0 20px;
+	position: absolute;
+	top:50px;
+	left: 6px;
+	right: 0;
+	width: 100%;
+	background: #fdf5f6;
+	height: 550px;
+}
+.music{
+	height: 650px;
+	background:#e6f3f5;
+}
+#certify {
+	position: relative;
+	width: 100%;
+	margin: 0 auto
+}
+
+#certify .swiper-container {
+	padding-bottom: 60px;
+}
+
+#certify  .swiper-slide {
+	width:350px;
+	height:350px;
+	background: #fff;
+	box-shadow: 0 8px 30px #ddd;
+	border-radius: 325px;
+}
+#certify .swiper-pagination {
+	width: 100%;
+	bottom: 20px;
+}
+
+#certify .swiper-pagination-bullets .swiper-pagination-bullet {
+	margin: 0 5px;
+	border: 3px solid #fff;
+	background-color: #d5d5d5;
+	width: 10px;
+	height: 10px;
+	opacity: 1;
+}
+#certify .swiper-pagination-bullets .swiper-pagination-bullet-active {
+	border: 3px solid #00aadc;
+	background-color: #fff;
+}
+/*热门视频*/
+.video{
+	width: 100%;
+	height: 880px;
+}
+.video-body{
+	margin-top: 18px;
+	position: absolute;
+	top:85px;
+	left: 1.5rem;
+	right: 0;
+	width: 100%;
+}
+.video-info{
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;	
+}
+/*渐入效果*/
+.portfolio-item {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+.portfolio-item__info {
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: calc(100% - 2 * 13px);
+  height: calc(100% - 2 * 7px);
+  background-color: rgba(255, 255, 255, 0.7);
+}
+.portfolio-item--eff1 .portfolio-item__info {
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+  opacity: 0;
+}
+
+.portfolio-item--eff1:hover .portfolio-item__info {
+  transition-property: all;
+  transition-duration: 0.4s;
+  transition-timing-function: linear;
+  transition-delay: 0s;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+  opacity: 1;
+}
+/*图片花絮*/
+.picture{
+	width: 100%;
+	height: 740px;
+	background:#f0f6fa;
+}
+.picture-body{
+	padding-top: 25px;
+	position: absolute;
+	top:65px;
+	left: 1.5rem;
+	right: 0;
+	width: 100%;
+	background: #fff;
+	height: 650px;
+}
+.thumbnail{
+	border: none;
+	margin-bottom: 0px;
+	padding: 0;
+}
+.margin{
+	margin-top: 2rem;
+}
+/*模态框出现位置*/
+.modal.fade.in{
+    top:4rem;  
+}

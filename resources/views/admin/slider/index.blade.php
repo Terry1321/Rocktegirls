@@ -37,7 +37,7 @@
           <td>{{$slider->description}}</td>
           <!-- 图片展示 -->
           <td>
-            <img src="./image/slider/{{$slider->img}}" alt="">
+            <img width='100px'  src="/Upload/Slider/{{$slider->img}}" alt="">
           </td>
            <!-- 图片排序 -->
           <td>{{$slider->sort}}</td>
@@ -61,7 +61,7 @@
     // <!-- 轮播图删除 -->
     function del(obj,id){
       if (confirm('你确定要删除吗？删除后不能被恢复')) {
-        $.post('slider/'+id,{'_method':'delete','_token':'{{csrf_token()}}'},function(data){
+        $.post('/admin/'+id,{'_method':'delete','_token':'{{csrf_token()}}','table':'slider'},function(data){
           if (data) {
             // 删除列表
             $(obj).parent().parent().remove();

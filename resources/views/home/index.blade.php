@@ -14,6 +14,12 @@
 	 <script src="style/home/js/swiper.min.js"></script>
 	  <link rel="stylesheet" href="style/home/css/swiper.min.css"> 
 </head>
+<style>	
+	a:hover{
+		text-decoration: none;
+	}
+
+</style>
 <body>
 	<div class="container-fluid">
 		<!-- 头部logo -->
@@ -27,22 +33,34 @@
 			<div class="col-md-12">
 				<div id="myCarousel" class="carousel slide">
 				    <!-- 轮播（Carousel）指标 -->
+				    <!-- 定义两个变量用于命名 -->
+				    <?php 
+				    	$i=0;//用轮播图点的命名
+				    	$j=0;//用于轮播图图片命名
+				     ?>
 				    <ol class="carousel-indicators">
-				        <li data-target="#myCarousel" data-slide-to="0" 
-				            class="active"></li>
-				        <li data-target="#myCarousel" data-slide-to="1"></li>
-				        <li data-target="#myCarousel" data-slide-to="2"></li>
-				        <li data-target="#myCarousel" data-slide-to="3"></li>
-				        <li data-target="#myCarousel" data-slide-to="4"></li>
+				    	<!--遍历从后台传过来的轮播图数据 -->
+				    	@foreach($data['slider'] as $slider)
+				    	<!-- i++ 先使用后赋值 -->
+							<?php $i++ ?>			    	
+				            <li data-target="#myCarousel" data-slide-to="{{$i}}" id="id_{{$i}}"></li>
+					      @endforeach  
 				    </ol>
+
 				    <!-- 轮播（Carousel）项目 -->
 				    <div class="carousel-inner">
-				        <div class="item active"><img src="style/home/image/1.jpg" alt="First slide"></div>
-				        <div class="item"><img src="style/home/image/2.jpg" alt="Second slide"></div>
-				        <div class="item"><img src="style/home/image/3.jpg" alt="Third slide"></div>
-				        <div class="item"><img src="style/home/image/4.jpg" alt="fourth slide"></div>
-				        <div class="item"><img src="style/home/image/5.jpg" alt="fifth slide"></div>
+			    	@foreach($data['slider'] as $slider)
+			    	<!-- j++ 先使用后赋值 -->
+						<?php $j++ ?>	
+				       	<div class="item" id="img_{{$j}}"><img src="/Upload/slider/{{$slider->img}}" title="{{$slider->title}}" ></div>
+			       	  @endforeach 
+				   <script>
+				   	//为上方两个div添加对应的类
+						$('#id_1').addClass('active');
+						$('#img_1').addClass('active');
+				    </script>
 				    </div>
+
 				    <!-- 轮播（Carousel）导航 -->
 				        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
 				            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -65,164 +83,44 @@
 						<div class="panel-heading">
 							最新资讯
 							<div class="pull-right">
-								<a href="">
-
-									<span class="glyphicon glyphicon-chevron-left"></span>
-								</a>
-								<a href="">
-									<span class="glyphicon glyphicon-chevron-right"></span>
-								</a>
+								{{$data['news']->links()}}
 							</div>								
 						</div>
 						<ul class="list-group">
-							<li class="list-group-item">
-								<div class="media">
-								<div class="media-left">
-									<img src="style/home/image/logo.png" class="media-object">
+							@foreach($data['news'] as $news)
+							<a href="{{$news->href}}" target="_blank">
+								<li class="list-group-item">
+									<div class="media">
+									<div class="media-left">
+										<img src="/Upload/news/{{$news->img}}" title='{{$news->title}}' class="media-object">
+									</div>
+									<div class="media-body">
+										<h4 class="media-heading" style="color: black">{{$news->title}}</h4><small class="pull-right">{{date('m-d',$news->createtime)}}</small>
+										<p class="news-info" style="color: black">{{$news->description}}</p>
+									</div>
 								</div>
-								<div class="media-body">
-									<h4 class="media-heading">高浩然牛逼</h4>
-									<p>高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼</p>
-								</div>
-							</div>
-							</li>
-							<li class="list-group-item">
-								<div class="media">
-								<div class="media-left">
-									<img src="style/home/image/logo.png" class="media-object">
-								</div>
-								<div class="media-body">
-									<h4 class="media-heading">高浩然牛逼</h4>
-									<p>高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼</p>
-								</div>
-							</div>
-							</li>
-							<li class="list-group-item">
-								<div class="media">
-								<div class="media-left">
-									<img src="style/home/image/logo.png" class="media-object">
-								</div>
-								<div class="media-body">
-									<h4 class="media-heading">高浩然牛逼</h4>
-									<p>高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼</p>
-								</div>
-							</div>
-							</li>
-							<li class="list-group-item">
-								<div class="media">
-								<div class="media-left">
-									<img src="style/home/image/logo.png" class="media-object">
-								</div>
-								<div class="media-body">
-									<h4 class="media-heading">高浩然牛逼</h4>
-									<p>高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼</p>
-								</div>
-							</div>
-							</li>
-							<li class="list-group-item">
-								<div class="media">
-								<div class="media-left">
-									<img src="style/home/image/logo.png" class="media-object">
-								</div>
-								<div class="media-body">
-									<h4 class="media-heading">高浩然牛逼</h4>
-									<p>高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼</p>
-								</div>
-							</div>
-							</li>
-							<li class="list-group-item">
-								<div class="media">
-								<div class="media-left">
-									<img src="style/home/image/logo.png" class="media-object">
-								</div>
-								<div class="media-body">
-									<h4 class="media-heading">高浩然牛逼</h4>
-									<p>高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼</p>
-								</div>
-							</div>
-							</li>
+								</li>
+							</a>
+							@endforeach
 						</ul>
 					</div>
 				</div>
 			</div>
+
 			<!-- 微博互动 -->
 			<div class="col-md-5">
 				<div class="pull-left">
 					<div class="panel panel-default">
 						<div class="panel-heading">微博互动</div>
 						<ul class="list-group">
-							<li class="list-group-item">
-								<div class="media">
-								<div class="media-left">
-									<img src="style/home/image/logo.png" class="media-object">
-								</div>
-								<div class="media-body">
-									<h4 class="media-heading">高浩然牛逼</h4>
-									<p>高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼</p>
-								</div>
-							</div>
-							</li>
-							<li class="list-group-item">
-								<div class="media">
-								<div class="media-left">
-									<img src="style/home/image/logo.png" class="media-object">
-								</div>
-								<div class="media-body">
-									<h4 class="media-heading">高浩然牛逼</h4>
-									<p>高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼</p>
-								</div>
-							</div>
-							</li>
-							<li class="list-group-item">
-								<div class="media">
-								<div class="media-left">
-									<img src="style/home/image/logo.png" class="media-object">
-								</div>
-								<div class="media-body">
-									<h4 class="media-heading">高浩然牛逼</h4>
-									<p>高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼</p>
-								</div>
-							</div>
-							</li>
-							<li class="list-group-item">
-								<div class="media">
-								<div class="media-left">
-									<img src="style/home/image/logo.png" class="media-object">
-								</div>
-								<div class="media-body">
-									<h4 class="media-heading">高浩然牛逼</h4>
-									<p>高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼</p>
-								</div>
-							</div>
-							</li>
-							<li class="list-group-item">
-								<div class="media">
-								<div class="media-left">
-									<img src="style/home/image/logo.png" class="media-object">
-								</div>
-								<div class="media-body">
-									<h4 class="media-heading">高浩然牛逼</h4>
-									<p>高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼</p>
-								</div>
-							</div>
-							</li>
-							<li class="list-group-item">
-								<div class="media">
-								<div class="media-left">
-									<img src="style/home/image/logo.png" class="media-object">
-								</div>
-								<div class="media-body">
-									<h4 class="media-heading">高浩然牛逼</h4>
-									<p>高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼高浩然牛逼</p>
-								</div>
-							</div>
-							</li>
+							  <iframe id="weiboScollBox" width="830" height="665" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=830&height=665&fansRow=2&ptype=1&speed=0&skin=5&isTitle=0&noborder=0&isWeibo=1&isFans=0&uid=5281360151&verifier=b8ff8efa&dpc=1"></iframe>
 						</ul>
 					</div>
 				</div>
 			</div>
 			<div class="col-md-1"></div>
 		</div>
+
 		<!-- 成员介绍 -->
 		<div class="row member">
 			<div class="col-md-2"></div>
@@ -232,106 +130,30 @@
 				<!-- Swiper -->
 					<div class="swiper-container gallery-thumbs">
 						<div class="swiper-wrapper">
-						  <div class="swiper-slide" style="background-image:url(style/home/image/siler1.jpg)">
+							@foreach($data['member'] as $member)
+						  <div class="swiper-slide" title='{{$member->title}}' style="background-image:url(/Upload/member/{{$member->img}})">
 							<div class="col-md-12" style="height: 80%"></div>
-							<div class="col-md-12 name text-center">赖美云</div>
+							<div class="col-md-12 name text-center">{{$member->name}}</div>
 						  </div>
-						  <div class="swiper-slide" style="background-image:url(style/home/image/siler2.jpg)">
-							<div class="col-md-12" style="height: 80%"></div>
-							<div class="col-md-12 name text-center">赖美云</div>
-						  </div>
-						  <div class="swiper-slide" style="background-image:url(style/home/image/siler3.jpg)">
-							<div class="col-md-12" style="height: 80%"></div>
-							<div class="col-md-12 name text-center">赖美云</div>
-						  </div>
-						  <div class="swiper-slide" style="background-image:url(style/home/image/siler4.jpg)">
-							<div class="col-md-12" style="height: 80%"></div>
-							<div class="col-md-12 name text-center">赖美云</div>
-						  </div>
-						  <div class="swiper-slide" style="background-image:url(style/home/image/siler5.jpg)">
-							<div class="col-md-12" style="height: 80%"></div>
-							<div class="col-md-12 name text-center">赖美云</div>
-						  </div>
-						  <div class="swiper-slide" style="background-image:url(style/home/image/siler6.jpg)">
-							<div class="col-md-12" style="height: 80%"></div>
-							<div class="col-md-12 name text-center">赖美云</div>
-						  </div>
+						  @endforeach
 						</div>
 					</div>
 					<div class="swiper-container gallery-top">
 						<div class="swiper-wrapper">
+							@foreach($data['member'] as $member)
 						  <div class="swiper-slide">
 						  	<div class="media">
 								<div class="media-left media-top">
-									<img src="style/home/image/siler1.jpg" class="media-object">
+									<img src="/Upload/member/{{$member->img}}" title='{{$member->title}}' class="media-object">
 								</div>
 								<div class="media-body">
-									<h1 class="media-heading ">赖美云</h1>
-									<p>赖美云，1998年7月7日出生于广东深圳，中国流行乐女歌手，女子演唱组合SING、火箭少女101成员。</p>
-									<p>2015年8月10日，赖美云随组合发行首支单曲《青春的告白》，正式出道 [1]  ；12月16日，随组合发行单曲《灵儿想叮当》及歌曲MV [2]  。2016年1月9日，随组合出席第一届繁星年度颁奖盛典，并获得年度先锋新人组合奖 [3]  ；3月4日，随组合发行单曲《Kiss Me》 [4]  ；7月，随组合发行首张数字音乐合辑《致青春》 [5]  ；20日，随组合参演校园梦想电影《闪光少女》，并为该片演唱了插曲 [6]  。2017年8月，随组合出演真人CG科幻青春偶像剧《快乐酷宝3》 [7]  ；9月17日，随组合为《酷狗校际音超联赛》演唱官方主题宣传曲《冒险时代》 [8]  ；29日，随组合受邀出席第一届亚洲音乐盛典，获得年度人气飙升女团奖 [9]  。2018年4月21日起，参加腾讯视频女团青春成长节目《创造101》 [10]  ，最终以第6名的成绩成功加入女子演唱组合“火箭少女101” [11]  。</p>
+									<h1 class="media-heading ">{{$member->name}}</h1>
+									<p>{{$member->title}}</p>
+									<p>{{$member->description}}</p>
 								</div>
 							</div>
 						  </div>
-						  <div class="swiper-slide">
-						  	<div class="media">
-								<div class="media-left  media-top">
-									<img src="style/home/image/siler2.jpg" class="media-object">
-								</div>
-								<div class="media-body">
-									<h1 class="media-heading ">赖美云</h1>
-									<p>赖美云，1998年7月7日出生于广东深圳，中国流行乐女歌手，女子演唱组合SING、火箭少女101成员。</p>
-									<p>2015年8月10日，赖美云随组合发行首支单曲《青春的告白》，正式出道 [1]  ；12月16日，随组合发行单曲《灵儿想叮当》及歌曲MV [2]  。2016年1月9日，随组合出席第一届繁星年度颁奖盛典，并获得年度先锋新人组合奖 [3]  ；3月4日，随组合发行单曲《Kiss Me》 [4]  ；7月，随组合发行首张数字音乐合辑《致青春》 [5]  ；20日，随组合参演校园梦想电影《闪光少女》，并为该片演唱了插曲 [6]  。2017年8月，随组合出演真人CG科幻青春偶像剧《快乐酷宝3》 [7]  ；9月17日，随组合为《酷狗校际音超联赛》演唱官方主题宣传曲《冒险时代》 [8]  ；29日，随组合受邀出席第一届亚洲音乐盛典，获得年度人气飙升女团奖 [9]  。2018年4月21日起，参加腾讯视频女团青春成长节目《创造101》 [10]  ，最终以第6名的成绩成功加入女子演唱组合“火箭少女101” [11]  。</p>
-								</div>
-							</div>
-						  </div>
-						  <div class="swiper-slide ">
-						  	<div class="media">
-								<div class="media-left  media-top">
-									<img src="style/home/image/siler3.jpg" class="media-object">
-								</div>
-								<div class="media-body">
-									<h1 class="media-heading ">赖美云</h1>
-									<p>赖美云，1998年7月7日出生于广东深圳，中国流行乐女歌手，女子演唱组合SING、火箭少女101成员。</p>
-									<p>2015年8月10日，赖美云随组合发行首支单曲《青春的告白》，正式出道 [1]  ；12月16日，随组合发行单曲《灵儿想叮当》及歌曲MV [2]  。2016年1月9日，随组合出席第一届繁星年度颁奖盛典，并获得年度先锋新人组合奖 [3]  ；3月4日，随组合发行单曲《Kiss Me》 [4]  ；7月，随组合发行首张数字音乐合辑《致青春》 [5]  ；20日，随组合参演校园梦想电影《闪光少女》，并为该片演唱了插曲 [6]  。2017年8月，随组合出演真人CG科幻青春偶像剧《快乐酷宝3》 [7]  ；9月17日，随组合为《酷狗校际音超联赛》演唱官方主题宣传曲《冒险时代》 [8]  ；29日，随组合受邀出席第一届亚洲音乐盛典，获得年度人气飙升女团奖 [9]  。2018年4月21日起，参加腾讯视频女团青春成长节目《创造101》 [10]  ，最终以第6名的成绩成功加入女子演唱组合“火箭少女101” [11]  。</p>
-								</div>
-							</div>
-						  </div>
-						  <div class="swiper-slide">
-						  	<div class="media">
-								<div class="media-left  media-top">
-									<img src="style/home/image/siler4.jpg" class="media-object">
-								</div>
-								<div class="media-body">
-									<h1 class="media-heading ">赖美云</h1>
-									<p>赖美云，1998年7月7日出生于广东深圳，中国流行乐女歌手，女子演唱组合SING、火箭少女101成员。</p>
-									<p>2015年8月10日，赖美云随组合发行首支单曲《青春的告白》，正式出道 [1]  ；12月16日，随组合发行单曲《灵儿想叮当》及歌曲MV [2]  。2016年1月9日，随组合出席第一届繁星年度颁奖盛典，并获得年度先锋新人组合奖 [3]  ；3月4日，随组合发行单曲《Kiss Me》 [4]  ；7月，随组合发行首张数字音乐合辑《致青春》 [5]  ；20日，随组合参演校园梦想电影《闪光少女》，并为该片演唱了插曲 [6]  。2017年8月，随组合出演真人CG科幻青春偶像剧《快乐酷宝3》 [7]  ；9月17日，随组合为《酷狗校际音超联赛》演唱官方主题宣传曲《冒险时代》 [8]  ；29日，随组合受邀出席第一届亚洲音乐盛典，获得年度人气飙升女团奖 [9]  。2018年4月21日起，参加腾讯视频女团青春成长节目《创造101》 [10]  ，最终以第6名的成绩成功加入女子演唱组合“火箭少女101” [11]  。</p>
-								</div>
-							</div>
-						  </div>
-						  <div class="swiper-slide">
-						  	<div class="media">
-								<div class="media-left  media-top">
-									<img src="style/home/image/siler5.jpg" class="media-object">
-								</div>
-								<div class="media-body">
-									<h1 class="media-heading ">赖美云</h1>
-									<p>赖美云，1998年7月7日出生于广东深圳，中国流行乐女歌手，女子演唱组合SING、火箭少女101成员。</p>
-									<p>2015年8月10日，赖美云随组合发行首支单曲《青春的告白》，正式出道 [1]  ；12月16日，随组合发行单曲《灵儿想叮当》及歌曲MV [2]  。2016年1月9日，随组合出席第一届繁星年度颁奖盛典，并获得年度先锋新人组合奖 [3]  ；3月4日，随组合发行单曲《Kiss Me》 [4]  ；7月，随组合发行首张数字音乐合辑《致青春》 [5]  ；20日，随组合参演校园梦想电影《闪光少女》，并为该片演唱了插曲 [6]  。2017年8月，随组合出演真人CG科幻青春偶像剧《快乐酷宝3》 [7]  ；9月17日，随组合为《酷狗校际音超联赛》演唱官方主题宣传曲《冒险时代》 [8]  ；29日，随组合受邀出席第一届亚洲音乐盛典，获得年度人气飙升女团奖 [9]  。2018年4月21日起，参加腾讯视频女团青春成长节目《创造101》 [10]  ，最终以第6名的成绩成功加入女子演唱组合“火箭少女101” [11]  。</p>
-								</div>
-							</div>
-						  </div>
-						<div class="swiper-slide">
-						  	<div class="media">
-								<div class="media-left  media-top">
-									<img src="style/home/image/siler6.jpg" class="media-object">
-								</div>
-								<div class="media-body">
-									<h1 class="media-heading ">赖美云</h1>
-									<p>赖美云，1998年7月7日出生于广东深圳，中国流行乐女歌手，女子演唱组合SING、火箭少女101成员。</p>
-									<p>2015年8月10日，赖美云随组合发行首支单曲《青春的告白》，正式出道 [1]  ；12月16日，随组合发行单曲《灵儿想叮当》及歌曲MV [2]  。2016年1月9日，随组合出席第一届繁星年度颁奖盛典，并获得年度先锋新人组合奖 [3]  ；3月4日，随组合发行单曲《Kiss Me》 [4]  ；7月，随组合发行首张数字音乐合辑《致青春》 [5]  ；20日，随组合参演校园梦想电影《闪光少女》，并为该片演唱了插曲 [6]  。2017年8月，随组合出演真人CG科幻青春偶像剧《快乐酷宝3》 [7]  ；9月17日，随组合为《酷狗校际音超联赛》演唱官方主题宣传曲《冒险时代》 [8]  ；29日，随组合受邀出席第一届亚洲音乐盛典，获得年度人气飙升女团奖 [9]  。2018年4月21日起，参加腾讯视频女团青春成长节目《创造101》 [10]  ，最终以第6名的成绩成功加入女子演唱组合“火箭少女101” [11]  。</p>
-								</div>
-							</div>
-						</div>
+						   @endforeach
 					   </div>	
 					  </div>
 				     </div>
@@ -348,12 +170,9 @@
 					<div id="certify">
 						<div class="swiper-container music-container">
 							<div class="swiper-wrapper">
-								<a href='#' target='_blank'  class="swiper-slide" style="background: url('style/home/image/music1.jpg') no-repeat;background-size:100%"></a>
-								<a href='#' target='_blank'  class="swiper-slide" style="background: url('style/home/image/music2.jpg') no-repeat;background-size:100%"></a>
-								<a href='#' target='_blank'  class="swiper-slide" style="background: url('style/home/image/music3.jpg') no-repeat;background-size:100%"></a>
-								<a href='#' target='_blank' class="swiper-slide" style="background: url('style/home/image/music4.jpg') no-repeat;background-size:100%"></a>
-								<a href='#' target='_blank' class="swiper-slide" style="background: url('style/home/image/music5.jpg') no-repeat;background-size:100%"></a>
-								<a href='#' target='_blank'  class="swiper-slide" style="background: url('style/home/image/music6.jpg') no-repeat;background-size:100%"></a>
+								@foreach($data['music'] as $music)
+								<a href='{{$music->href}}' target='_blank' title="{{$music->title}}" class="swiper-slide" style="background: url('/Upload/music/{{$music->img}}') no-repeat;background-size:100%"></a>
+								@endforeach
 							</div>
 						</div>
 						<div class="swiper-pagination"></div>
@@ -370,11 +189,13 @@
 				<div class="title text-center"><strong>热门视频</strong></div>
 				<div class="video-body">
 					<div class="container-fluid">
+						@foreach($data['video'] as $firstRow)
 						<div class="row">
+							@foreach($firstRow as $video)
 						    <div class="col-sm-3 col-md-3">
 						         <div class="thumbnail">
 						         	<div class="portfolio-item portfolio-effect__item portfolio-item--eff1">
-							            <img src="style/home/image/video.jpg" 
+							            <img src="/Upload/video/{{$video->img}}" title="{{$video->title}}" 
 							             alt="通用的占位符缩略图">
 							             <a href="" target='_blank'>
 								          <div class="portfolio-item__info">
@@ -383,194 +204,14 @@
 						            	</a>
 						         	</div>
 						            <div class="caption">
-						            	<a href="" target='_blank'><p class="video-info">赖美云最新专辑和神秘土豪合唱</p></a>
-						               <a href="" target='_blank'><p class="video-info">神秘土豪揭秘：高浩然，高浩然牛逼神秘土豪揭秘：高浩然，高浩然牛逼神秘土豪揭秘：高浩然，高浩然牛逼神秘土豪揭秘：高浩然，高浩然牛逼</p></a>
+						            	<a href="{{$video->href}}" target='_blank' style="color: black"><p class="video-info">{{$video->title}}</p></a>
+						               <a href="{{$video->href}}" target='_blank' style="color: black"><p class="video-info">{{$video->description}}</p></a>
 						            </div>
 						         </div>
 						    </div>
-						    <div class="col-sm-3 col-md-3">
-						         <div class="thumbnail">
-						         	<div class="portfolio-item portfolio-effect__item portfolio-item--eff1">
-							            <img src="style/home/image/video.jpg" 
-							             alt="通用的占位符缩略图">
-							             <a href="" target='_blank'>
-								          <div class="portfolio-item__info">
-								            <img src="style/home/image/start.jpg" width="" alt="">
-								          </div>
-						            	</a>
-						         	</div>
-						            <div class="caption">
-						            	<a href="" target='_blank'><p class="video-info">赖美云最新专辑和神秘土豪合唱</p></a>
-						               <a href="" target='_blank'><p class="video-info">神秘土豪揭秘：高浩然，高浩然牛逼神秘土豪揭秘：高浩然，高浩然牛逼神秘土豪揭秘：高浩然，高浩然牛逼神秘土豪揭秘：高浩然，高浩然牛逼</p></a>
-						            </div>
-						         </div>
-						    </div><div class="col-sm-3 col-md-3">
-						         <div class="thumbnail">
-						         	<div class="portfolio-item portfolio-effect__item portfolio-item--eff1">
-							            <img src="style/home/image/video.jpg" 
-							             alt="通用的占位符缩略图">
-							             <a href="" target='_blank'>
-								          <div class="portfolio-item__info">
-								            <img src="style/home/image/start.jpg" width="" alt="">
-								          </div>
-						            	</a>
-						         	</div>
-						            <div class="caption">
-						            	<a href="" target='_blank'><p class="video-info">赖美云最新专辑和神秘土豪合唱</p></a>
-						               <a href="" target='_blank'><p class="video-info">神秘土豪揭秘：高浩然，高浩然牛逼神秘土豪揭秘：高浩然，高浩然牛逼神秘土豪揭秘：高浩然，高浩然牛逼神秘土豪揭秘：高浩然，高浩然牛逼</p></a>
-						            </div>
-						         </div>
-						    </div><div class="col-sm-3 col-md-3">
-						         <div class="thumbnail">
-						         	<div class="portfolio-item portfolio-effect__item portfolio-item--eff1">
-							            <img src="style/home/image/video.jpg" 
-							             alt="通用的占位符缩略图">
-							             <a href="" target='_blank'>
-								          <div class="portfolio-item__info">
-								            <img src="style/home/image/start.jpg" width="" alt="">
-								          </div>
-						            	</a>
-						         	</div>
-						            <div class="caption">
-						            	<a href="" target='_blank'><p class="video-info">赖美云最新专辑和神秘土豪合唱</p></a>
-						               <a href="" target='_blank'><p class="video-info">神秘土豪揭秘：高浩然，高浩然牛逼神秘土豪揭秘：高浩然，高浩然牛逼神秘土豪揭秘：高浩然，高浩然牛逼神秘土豪揭秘：高浩然，高浩然牛逼</p></a>
-						            </div>
-						         </div>
-						    </div>
+						    @endforeach
 						</div>
-						<div class="row">
-						    <div class="col-sm-3 col-md-3">
-						         <div class="thumbnail">
-						         	<div class="portfolio-item portfolio-effect__item portfolio-item--eff1">
-							            <img src="style/home/image/video.jpg" 
-							             alt="通用的占位符缩略图">
-							             <a href="" target='_blank'>
-								          <div class="portfolio-item__info">
-								            <img src="style/home/image/start.jpg" width="" alt="">
-								          </div>
-						            	</a>
-						         	</div>
-						            <div class="caption">
-						            	<a href="" target='_blank'><p class="video-info">赖美云最新专辑和神秘土豪合唱</p></a>
-						               <a href="" target='_blank'><p class="video-info">神秘土豪揭秘：高浩然，高浩然牛逼神秘土豪揭秘：高浩然，高浩然牛逼神秘土豪揭秘：高浩然，高浩然牛逼神秘土豪揭秘：高浩然，高浩然牛逼</p></a>
-						            </div>
-						         </div>
-						    </div><div class="col-sm-3 col-md-3">
-						         <div class="thumbnail">
-						         	<div class="portfolio-item portfolio-effect__item portfolio-item--eff1">
-							            <img src="style/home/image/video.jpg" 
-							             alt="通用的占位符缩略图">
-							             <a href="" target='_blank'>
-								          <div class="portfolio-item__info">
-								            <img src="style/home/image/start.jpg" width="" alt="">
-								          </div>
-						            	</a>
-						         	</div>
-						            <div class="caption">
-						            	<a href="" target='_blank'><p class="video-info">赖美云最新专辑和神秘土豪合唱</p></a>
-						               <a href="" target='_blank'><p class="video-info">神秘土豪揭秘：高浩然，高浩然牛逼神秘土豪揭秘：高浩然，高浩然牛逼神秘土豪揭秘：高浩然，高浩然牛逼神秘土豪揭秘：高浩然，高浩然牛逼</p></a>
-						            </div>
-						         </div>
-						    </div><div class="col-sm-3 col-md-3">
-						         <div class="thumbnail">
-						         	<div class="portfolio-item portfolio-effect__item portfolio-item--eff1">
-							            <img src="style/home/image/video.jpg" 
-							             alt="通用的占位符缩略图">
-							             <a href="" target='_blank'>
-								          <div class="portfolio-item__info">
-								            <img src="style/home/image/start.jpg" width="" alt="">
-								          </div>
-						            	</a>
-						         	</div>
-						            <div class="caption">
-						            	<a href="" target='_blank'><p class="video-info">赖美云最新专辑和神秘土豪合唱</p></a>
-						               <a href="" target='_blank'><p class="video-info">神秘土豪揭秘：高浩然，高浩然牛逼神秘土豪揭秘：高浩然，高浩然牛逼神秘土豪揭秘：高浩然，高浩然牛逼神秘土豪揭秘：高浩然，高浩然牛逼</p></a>
-						            </div>
-						         </div>
-						    </div><div class="col-sm-3 col-md-3">
-						         <div class="thumbnail">
-						         	<div class="portfolio-item portfolio-effect__item portfolio-item--eff1">
-							            <img src="style/home/image/video.jpg" 
-							             alt="通用的占位符缩略图">
-							             <a href="" target='_blank'>
-								          <div class="portfolio-item__info">
-								            <img src="style/home/image/start.jpg" width="" alt="">
-								          </div>
-						            	</a>
-						         	</div>
-						            <div class="caption">
-						            	<a href="" target='_blank'><p class="video-info">赖美云最新专辑和神秘土豪合唱</p></a>
-						               <a href="" target='_blank'><p class="video-info">神秘土豪揭秘：高浩然，高浩然牛逼神秘土豪揭秘：高浩然，高浩然牛逼神秘土豪揭秘：高浩然，高浩然牛逼神秘土豪揭秘：高浩然，高浩然牛逼</p></a>
-						            </div>
-						         </div>
-						    </div>
-						</div><div class="row">
-						    <div class="col-sm-3 col-md-3">
-						         <div class="thumbnail">
-						         	<div class="portfolio-item portfolio-effect__item portfolio-item--eff1">
-							            <img src="style/home/image/video.jpg" 
-							             alt="通用的占位符缩略图">
-							             <a href="" target='_blank'>
-								          <div class="portfolio-item__info">
-								            <img src="style/home/image/start.jpg" width="" alt="">
-								          </div>
-						            	</a>
-						         	</div>
-						            <div class="caption">
-						            	<a href="" target='_blank'><p class="video-info">赖美云最新专辑和神秘土豪合唱</p></a>
-						               <a href="" target='_blank'><p class="video-info">神秘土豪揭秘：高浩然，高浩然牛逼神秘土豪揭秘：高浩然，高浩然牛逼神秘土豪揭秘：高浩然，高浩然牛逼神秘土豪揭秘：高浩然，高浩然牛逼</p></a>
-						            </div>
-						         </div>
-						    </div><div class="col-sm-3 col-md-3">
-						         <div class="thumbnail">
-						         	<div class="portfolio-item portfolio-effect__item portfolio-item--eff1">
-							            <img src="style/home/image/video.jpg" 
-							             alt="通用的占位符缩略图">
-							             <a href="" target='_blank'>
-								          <div class="portfolio-item__info">
-								            <img src="style/home/image/start.jpg" width="" alt="">
-								          </div>
-						            	</a>
-						         	</div>
-						            <div class="caption">
-						            	<a href="" target='_blank'><p class="video-info">赖美云最新专辑和神秘土豪合唱</p></a>
-						               <a href="" target='_blank'><p class="video-info">神秘土豪揭秘：高浩然，高浩然牛逼神秘土豪揭秘：高浩然，高浩然牛逼神秘土豪揭秘：高浩然，高浩然牛逼神秘土豪揭秘：高浩然，高浩然牛逼</p></a>
-						            </div>
-						         </div>
-						    </div><div class="col-sm-3 col-md-3">
-						         <div class="thumbnail">
-						         	<div class="portfolio-item portfolio-effect__item portfolio-item--eff1">
-							            <img src="style/home/image/video.jpg" 
-							             alt="通用的占位符缩略图">
-							             <a href="" target='_blank'>
-								          <div class="portfolio-item__info">
-								            <img src="style/home/image/start.jpg" width="" alt="">
-								          </div>
-						            	</a>
-						         	</div>
-						            <div class="caption">
-						            	<a href="" target='_blank'><p class="video-info">赖美云最新专辑和神秘土豪合唱</p></a>
-						               <a href="" target='_blank'><p class="video-info">神秘土豪揭秘：高浩然，高浩然牛逼神秘土豪揭秘：高浩然，高浩然牛逼神秘土豪揭秘：高浩然，高浩然牛逼神秘土豪揭秘：高浩然，高浩然牛逼</p></a>
-						            </div>
-						         </div>
-						    </div><div class="col-sm-3 col-md-3">
-						         <div class="thumbnail">
-						         	<div class="portfolio-item portfolio-effect__item portfolio-item--eff1">
-							            <img src="style/home/image/video.jpg" 
-							             alt="通用的占位符缩略图">
-							             <a href="" target='_blank'>
-								          <div class="portfolio-item__info">
-								            <img src="style/home/image/start.jpg" width="" alt="">
-								          </div>
-						            	</a>
-						         	</div>
-						            <div class="caption">
-						            	<a href="" target='_blank'><p class="video-info">赖美云最新专辑和神秘土豪合唱</p></a>
-						               <a href="" target='_blank'><p class="video-info">神秘土豪揭秘：高浩然，高浩然牛逼神秘土豪揭秘：高浩然，高浩然牛逼神秘土豪揭秘：高浩然，高浩然牛逼神秘土豪揭秘：高浩然，高浩然牛逼</p></a>
-						            </div>
-						         </div>
-						    </div>
-						</div>
+						@endforeach
 						</div>
 					</div>
 		     	</div>
@@ -583,104 +224,41 @@
 					<div class="title text-center"><strong>图片花絮</strong></div>
 					<div class="picture-body">
 					<div class="container-fluid">
+						@foreach($data['picture'] as $row)
 						<div class="row">
-						    <div class="col-sm-6 col-md-3">
+							@foreach($row as $picture)
+						    <div class="col-sm-3 col-md-3">
 						        <div class="thumbnail margin">
-						            <img src="style/home/image/video.jpg"
-						                 alt="火箭少女101图片花絮" data-toggle="modal" data-target="#myModal">
+						            <img src="Upload/picture/{{$picture->img}}" title='{{$picture->title}}'
+						                 alt="火箭少女101图片花絮" data-toggle="modal" data-target="#myModal{{$picture->id}}">
 						        </div>
 						    </div>
-						    <div class="col-sm-6 col-md-3">
-						        <div class="thumbnail margin">
-						            <img src="style/home/image/video.jpg"
-						                 alt="火箭少女101图片花絮" data-toggle="modal" data-target="#myModal">
-						        </div>
-						    </div>
-						    <div class="col-sm-6 col-md-3">
-						        <div class="thumbnail margin">
-						            <img src="style/home/image/video.jpg"
-						                 alt="火箭少女101图片花絮" data-toggle="modal" data-target="#myModal">
-						        </div>
-						    </div>
-						    <div class="col-sm-6 col-md-3">
-						        <div class="thumbnail margin">
-						            <img src="style/home/image/video.jpg"
-						                 alt="火箭少女101图片花絮" data-toggle="modal" data-target="#myModal">
-						        </div>
-						    </div>
+						    @endforeach
 						</div>
-						<div class="row">
-						    <div class="col-sm-6 col-md-3">
-						        <div class="thumbnail margin">
-						            <img src="style/home/image/video.jpg"
-						                 alt="火箭少女101图片花絮" data-toggle="modal" data-target="#myModal">
-						        </div>
-						    </div>
-						    <div class="col-sm-6 col-md-3">
-						        <div class="thumbnail margin">
-						            <img src="style/home/image/video.jpg"
-						                 alt="火箭少女101图片花絮" data-toggle="modal" data-target="#myModal">
-						        </div>
-						    </div>
-						    <div class="col-sm-6 col-md-3">
-						        <div class="thumbnail margin">
-						            <img src="style/home/image/video.jpg"
-						                 alt="火箭少女101图片花絮" data-toggle="modal" data-target="#myModal">
-						        </div>
-						    </div>
-						    <div class="col-sm-6 col-md-3">
-						        <div class="thumbnail margin">
-						            <img src="style/home/image/video.jpg"
-						                 alt="火箭少女101图片花絮" data-toggle="modal" data-target="#myModal">
-						        </div>
-						    </div>
-						</div>
-						<div class="row">
-						    <div class="col-sm-6 col-md-3">
-						        <div class="thumbnail margin">
-						            <img src="style/home/image/video.jpg"
-						                 alt="火箭少女101图片花絮" data-toggle="modal" data-target="#myModal">
-						        </div>
-						    </div>
-						    <div class="col-sm-6 col-md-3">
-						        <div class="thumbnail margin">
-						            <img src="style/home/image/video.jpg"
-						                 alt="火箭少女101图片花絮" data-toggle="modal" data-target="#myModal">
-						        </div>
-						    </div>
-						    <div class="col-sm-6 col-md-3">
-						        <div class="thumbnail margin">
-						            <img src="style/home/image/video.jpg"
-						                 alt="火箭少女101图片花絮" data-toggle="modal" data-target="#myModal">
-						        </div>
-						    </div>
-						    <div class="col-sm-6 col-md-3">
-						        <div class="thumbnail margin">
-						            <img src="style/home/image/video.jpg"
-						                 alt="火箭少女101图片花絮" data-toggle="modal" data-target="#myModal">
-						        </div>
-						    </div>
-						</div>
-					
+						@endforeach
 					</div>
 	
 				</div>
 			</div>
 			<!-- 模态框 -->
-			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-								&times;
-							</button>
-						</div>
-						<div class="modal-body">
-							<img src="style/home/image/video.jpg" alt="" width="100%">
-						</div>
-					</div><!-- /.modal-content -->
-				</div><!-- /.modal -->
-			</div>
+		@foreach($data['picture'] as $row)
+			@foreach($row as $picture)
+				<div class="modal fade" id="myModal{{$picture->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+									&times;
+								</button>
+							</div>
+							<div class="modal-body">
+								<img src="/Upload/picture/{{$picture->img}}" alt="" width="100%">
+							</div>
+						</div><!-- /.modal-content -->
+					</div><!-- /.modal -->
+				</div>
+			@endforeach
+		@endforeach
 	</div>
 </body>
 <script>

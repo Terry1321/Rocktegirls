@@ -38,10 +38,9 @@
     <tr>
       <th class="text-center">ID</th>
       <th class="text-center">用户名</th>
-      <th class="text-center">用户登陆次数</th>
+      <th class="text-center">邮箱</th>
       <th class="text-center">用户是否可用</th>
       <th class="text-center">用户创建时间</th>
-      <th class="text-center">最后登录时间</th>
       <th class="text-center">操作</th>
     </tr>
     @if(isset($data['paginate']))
@@ -51,8 +50,8 @@
           <td>{{$userInfo->id}}</td>
           <!-- 用户名字 -->
           <td>{{$userInfo->name}}</td>
-          <!-- 登录次数 -->
-          <td>{{$userInfo->count}}</td>
+          <!-- 用户登陆邮箱 -->
+          <td>{{$userInfo->email}}</td>
           <!-- 判断用户状态 -->
           @if($userInfo->is_open)
             <td><span class="btn btn-success" id='statu' onclick="changeStatu(this,{{$userInfo->id}},{{$userInfo->is_open}})">可用</span></td>
@@ -60,9 +59,7 @@
             <td><span class="btn btn-danger" id='statu' onclick="changeStatu(this,{{$userInfo->id}},{{$userInfo->is_open}})">禁用</span></td>
           @endif
           <!-- 创建时间 -->
-          <td>{{date('H-m-d H:i:s',$userInfo->createtime)}}</td>
-          <!-- 最后登陆时间 -->
-          <td>{{date('H-m-d H:i:s',$userInfo->lasttime)}}</td>
+          <td>{{$userInfo->created_at}}</td>
           <td>
             <a href="/admin/user/{{$userInfo->id}}/edit"><span class="glyphicon glyphicon-cog" style="color:skyblue"></span>修改</a>
             &nbsp;&nbsp;
@@ -83,7 +80,7 @@
     // <!-- 用户删除 -->
     function del(obj,id){
       if (confirm('你确定要删除吗？删除后不能被恢复')) {
-        $.post('user/'+id,{'_method':'delete','_token':'{{csrf_token()}}'},function(data){
+        $.post('/admin/'+id,{'_method':'delete','_token':'{{csrf_token()}}','table':'users'},function(data){
           if (data) {
             // 删除列表
             $(obj).parent().parent().remove();

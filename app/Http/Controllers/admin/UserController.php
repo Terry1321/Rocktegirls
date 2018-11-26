@@ -5,10 +5,13 @@ namespace App\Http\Controllers\admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
+use App\Http\Controllers\admin\ModelController;
 // 后台用户管理
 class UserController extends Controller
 {
-
+	public function __construct(){
+	    $this->middleware('auth');
+	}
 	/** 查询数据库数据
 		@search 搜索函数
 	**/
@@ -16,20 +19,21 @@ class UserController extends Controller
     	// 判断search函数是否存在
     	if ($search=='查看全部') {
 			// 总数据
-	    	$count=DB::table('user')->count();
+	    	$count=DB::table('users')->count();
     		// 获取全部数据
-    		$paginate=DB::table('user')->paginate(15);
+    		$paginate=DB::table('users')->paginate(15);
     	}else{
     		// 总数值
-    		$count=DB::table('user')->where('name','like',"%".$search."%")->count();
+    		$count=DB::table('users')->where('name','like',"%".$search."%")->count();
 			// 获取搜索的数据
-    		$paginate=DB::table('user')->where('name','like',"%".$search."%")->paginate(15);
+    		$paginate=DB::table('users')->where('name','like',"%".$search."%")->paginate(15);
     	}
     	// 数据整理
     	$data=array(
     		'paginate'=>$paginate,
     		'count'=>$count,
     	);
+
     	// 返回数组
     	return $data;
 	}
@@ -54,21 +58,6 @@ class UserController extends Controller
 
 	 }
 
-    // 用户信息删除
-    public function destroy($id){
-    	// id如果获取成功
-    	if ($id) {
-    		// 如果删除成功
-    		if (DB::table('user')->where('id',$id)->delete()) {
-    			return 1;
-    		}else{
-    			return 0;
-    		}
-    	}else{
-    		return 0;
-    	}
-    }
-	
 	 //用户添加页面
 	 public function create(){
 	 	return view('admin.user.create');
@@ -80,18 +69,12 @@ class UserController extends Controller
 		$data=$request->all();
 		// 表单验证规则
 		$rule=[
-			'name'=>'required|unique:user|between:4,12',
-			'passwd'=>'required|same:repasswd|between:6,12',
+			'name'=>'required|unique:users|between:4,12',
+			'password'=>'required|same:repasswd|between:6,12',
+			'email'=>'required|email|unique:users',
 		];
 		// 表单验证错误信息
-		$message=[
-			'name.required'=>'用户名不能为空',
-			'name.unique'=>'用户名已存在',
-			'name.between'=>'用户名长度不符合规范',
-			'passwd.required'=>'密码不能为空',
-			'passwd.same'=>'两次密码不相同',
-			'passwd.between'=>'密码长度不符合规范',
-		];
+		$message=ModelController::message();
 		// 生成表单验证
 		$validator=\Validator::make($data,$rule,$message);
 		// 如果通过表单验证
@@ -99,17 +82,13 @@ class UserController extends Controller
 			// 数据整理
 			$data=$request->except('_token','repasswd');
 			//密码加密
-			$data['passwd']=\Crypt::encrypt($data['passwd']);
-			// 默认登陆次数
-			$data['count']=0;
+			$data['password']=bcrypt($data['password']);
 			// 创建时间
-			$data['createtime']=time();
-			// 最后登陆时间
-			$data['lasttime']=time();
+			$data['created_at']=date('Y-m-d H:i:s',time());
 			// 默认开启
 			$data['is_open']=1;
 			// 添加数据库
-			if (DB::table('user')->insert($data)){
+			if (DB::table('users')->insert($data)){
 				return redirect('admin/user');
 			}else{
 				return back();
@@ -123,7 +102,7 @@ class UserController extends Controller
 	 //用户信息修改页面
 	 public function edit($id){
 	 	// 获取对应数据
-	 	$data=DB::table('user')->where('id',$id)->value('name');
+	 	$data=DB::table('users')->where('id',$id)->first();
 	 	// 返回视图和信息
 	 	return view('admin.user.edit')->with('data',$data)->with('id',$id);
 	 }
@@ -134,23 +113,19 @@ class UserController extends Controller
 		$data=$request->all();
 		// 表单验证规则
 		$rule=[
-			'passwd'=>'required|same:repasswd|between:6,12',
+			'password'=>'required|same:repasswd|between:6,12',
 		];
 		// 表单验证错误信息
-		$message=[
-			'passwd.required'=>'密码不能为空',
-			'passwd.same'=>'两次密码不相同',
-			'passwd.between'=>'密码长度不符合规范',
-		];
+		$message=ModelController::message();
 		// 生成表单验证
 		$validator=\Validator::make($data,$rule,$message);
 		// 如果通过表单验证
 		if ($validator->passes()) {
 			// 数据整理
 			$data=$request->except('_token','repasswd','_method');
-			$data['passwd']=\Crypt::encrypt($data['passwd']);
+			$data['password']=bcrypt($data['password']);
 			// 添加数据库
-			if (DB::table('user')->where('id',$id)->update($data)){
+			if (DB::table('users')->where('id',$id)->update($data)){
 				return redirect('admin/user');
 			}else{
 				return back();
@@ -176,7 +151,7 @@ class UserController extends Controller
 	 			break;
 	 	}
 	 	// 修改数据
-	 	if (DB::table('user')->where('id',$id)->update(['is_open' => $is_open])) {
+	 	if (DB::table('users')->where('id',$id)->update(['is_open' => $is_open])) {
 	 		return $is_open;
 	 	}else{
 	 		return 2;

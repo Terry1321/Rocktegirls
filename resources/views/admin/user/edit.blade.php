@@ -15,12 +15,17 @@
     <input type="hidden" name="_method" value="put">
     <div class="form-group">
       <label>用户名</label>
-      <input type="text" class="form-control" placeholder="请输入用户名"  value="{{$data}}" disabled="disabled"> 
-      <input type="hidden" name="name" value="{{$data}}">
+      <input type="text" class="form-control" placeholder="请输入用户名"  value="{{$data->name}}" disabled="disabled"> 
+      <input type="hidden" name="name" value="{{$data->name}}">
+    </div>
+    <div class="form-group">
+      <label>邮箱</label>
+      <input type="text" class="form-control" placeholder="请输入用户名"  value="{{$data->email}}" disabled="disabled"> 
+      <input type="hidden" name="email" value="{{$data->email}}">
     </div>
     <div class="form-group">
       <label>密码</label>
-      <input type="password" class="form-control" placeholder="请输入密码" name="passwd"> 
+      <input type="password" class="form-control" placeholder="请输入密码" name="password"> 
     </div>
     <div class="form-group">
       <label>请再次输入密码</label>

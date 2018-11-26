@@ -22,14 +22,21 @@
 			<div class="swiper-slide menu">
         <ul class="list-unstyled">
           <li class="list text-center">火箭少女101后台首页</li>
-          <a href="/admin"><li class="list text-center" id="admin"><span class="glyphicon glyphicon-th"></span>&nbsp;后台首页</li></a>
+          <a href="/admin"><li class="list text-center" id="admin"><span class="glyphicon glyphicon-home"></span>&nbsp;后台首页</li></a>
           <a href="/admin/user"><li class="list text-center" id="user"><span class="glyphicon glyphicon-user"></span>&nbsp;用户管理</li></a>
+          <a href="/admin/member"><li class="list text-center" id="member"><span class="glyphicon glyphicon-heart"></span>&nbsp;成员介绍</li></a>
+          <a href="/admin/news"><li class="list text-center news" id="news"><span class="glyphicon glyphicon-file"></span>&nbsp;最新资讯</li></a>
           <a href="/admin/slider"><li class="list text-center slider" id="slider"><span class="glyphicon glyphicon-indent-right"></span>&nbsp;轮播图片</li></a>
           <a href="/admin/music"><li class="list text-center music" id="music"><span class="glyphicon glyphicon-music"></span>&nbsp;音乐单曲</li></a>
           <a href="/admin/video"><li class="list text-center video" id="video"><span class="glyphicon glyphicon-film"></span>&nbsp;热门视频</li></a>
           <a href="/admin/picture"><li class="list text-center picture" id="picture"><span class="glyphicon glyphicon-picture"></span>&nbsp;图片花絮</li></a>
-          <a href="/admin/clear"><li class="list text-center"><span class="glyphicon glyphicon-trash"></span>&nbsp;清理缓存</li></a>
-          <a href="/admin/logout"><li class="list text-center"><span class="glyphicon glyphicon-off"></span>&nbsp;退出账号</li></a>
+          <a href="javascript:;" id='clear'><li class="list text-center"><span class="glyphicon glyphicon-trash"></span>&nbsp;清理缓存</li></a>
+           <a href="{{ route('logout') }}"onclick="if (confirm('你确定要退出吗?')) {event.preventDefault(); document.getElementById('logout-form').submit();}">
+              <li class="list text-center"><span class="glyphicon glyphicon-off"></span>&nbsp;退出账号</li>
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                {{ csrf_field() }}
+            </form>
         </ul>
       </div>
       <!-- 内容 -->
@@ -50,6 +57,17 @@
 	</div>
   <!-- Swiper -->
 	<script>
+    // 清理缓存
+    $('#clear').click(function(){
+      if (confirm('你确定要清理吗?')) {}
+      $.get('admin/clearcache',{},function(data){
+          if(data){
+            alert('清理成功');
+          }else{
+            alert('清理失败,刷新重试');
+          }
+      })
+    });
     var menuButton = document.querySelector('.menu-button');
     // 启动Swiper
     var swiper = new Swiper('.swiper-container', {
@@ -87,6 +105,7 @@
       $active=isset($arr[2])?$arr[2]:$arr[1];
      ?>
     $('#{{$active}}').addClass('list-active');
+
 	</script>
 </body>
 </html>

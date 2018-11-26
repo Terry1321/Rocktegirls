@@ -1,7 +1,7 @@
 @extends('admin.public.public')
 @section('main')
-<div class="page-header"><h1>轮播图添加</h1><small>用于添加轮播图</small></div>
- <form action="/admin/slider" method="post">
+<div class="page-header"><h1>用户管理添加</h1><small>用于添加用户管理</small></div>
+ <form action="/admin/user" method="post">
   {{csrf_field()}}
   @if (count($errors) > 0)
     <div class="alert alert-danger">
@@ -12,23 +12,23 @@
         </ul>
     </div>
 @endif
-    <div class="form-group" >
-      <label>轮播图title</label>
-      <input type="text" class="form-control" placeholder="请输入图片title" name="title" value="{{ old('tilte') }}"> 
+    <div class="form-group">
+      <label>用户账号（日后不可修改）</label>
+      <input type="text" class="form-control" placeholder="请输入账号" name="name" value="{{ old('name') }}"> 
     </div>
     <div class="form-group">
-      <label>轮播图描述</label>
-      <input type="password" class="form-control" placeholder="请输入图片描述" name="description" value="{{ old('descriptopm') }}“> 
+      <label>用户邮箱（日后不可修改）</label>
+      <input type="text" class="form-control" placeholder="请输入邮箱" name="email" value="{{ old('email') }}"> 
     </div>
     <div class="form-group">
-      <label>轮播图排序</label>
-      <input type="number" class="form-control" placeholder="请输入图片排序" name="sort" value="{{ old('sort') }}”> 
+      <label>用户密码</label>
+      <input type="password" class="form-control" placeholder="请输入密码" name="password"> 
     </div>
     <div class="form-group">
-      <label>轮播图图片</label>
-      <input type="file" id="slider" >
+      <label>确认密码</label>
+      <input type="password" class="form-control" placeholder="请再次输入密码" name="repasswd"> 
     </div>
     <input type="submit" value="提交" class="btn btn-default">
-    <a href="/admin/slider" class="btn btn-danger">返回</a>
+    <a href="/admin/user" class="btn btn-danger">返回</a>
  </form>
 @endsection
